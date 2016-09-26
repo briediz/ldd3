@@ -1,12 +1,9 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <fcntl.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <unistd.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -15,40 +12,35 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
- 
-#define BUF_SIZE 8192
-//#define FILESIZE 0x10000000
-//#define FILESIZE 1024
+
 #define FILESIZE 4096
 int main(int argc, char* argv[]) {
  
-    int input_fd, output_fd;    /* Input and output file descriptors */
-    ssize_t ret_in, ret_out;    /* Number of bytes returned by read() and write() */
-    char buffer[BUF_SIZE];      /* Character buffer */
-    int *map, *ptr;  /* mmapped array of int's */
+    int input_fd;
+    int *map, *ptr;
     int i, fd;
     
     /* Are src and dest file name arguments missing */
     if(argc != 2){
-        printf ("Usage: file1 \n");
+        printf ("Usage: file \n");
         return 1;
     }
  
     /* Create input file descriptor */
     input_fd = open (argv [1], O_RDONLY);
     if (input_fd == -1) {
-            perror ("open 1");
-            return 2;
+        perror ("open");
+        return 2;
     }
     
-    map = mmap(0, FILESIZE, PROT_READ , MAP_SHARED, input_fd, FILESIZE);
+    map = mmap(0, FILESIZE, PROT_READ , MAP_SHARED, input_fd, 0);
     ptr=map;
     if (map <= 0) {
         close(input_fd);
         perror("Error mmapping the file");
         exit(EXIT_FAILURE);
     } else {
-        printf ("mapping ok 2_\n");
+        printf ("mapping ok\n");
     }
 
     printf("val=0x%08d\n", map[0] );
