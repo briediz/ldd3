@@ -10,4 +10,12 @@ build for ppc:
 powerpc-linux-gnu-gcc-4.8 user-simpel.c (user space)
 make (kernel module, copy the Makefile bevor)
 
+
+build for arm64:
+-----------------
+source /opt/fsl-qoriq/2.0/environment-setup-aarch64-fsl-linux
+$CC user-simpel.c
+
+run on target:
+-----------------
 ./a.out /dev/simpler
