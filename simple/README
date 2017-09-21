@@ -11,10 +11,18 @@ powerpc-linux-gnu-gcc-4.8 user-simpel.c (user space)
 make (kernel module, copy the Makefile bevor)
 
 
-build for arm64:
------------------
+build user space for arm64:
+----------------------------
 source /opt/fsl-qoriq/2.0/environment-setup-aarch64-fsl-linux
 $CC user-simpel.c
+
+build kernel module for arm64:
+-------------------------------
+source /opt/fsl-qoriq/2.0/environment-setup-aarch64-fsl-linux
+unset LDFLAGS
+make
+
+
 
 run on target:
 -----------------
