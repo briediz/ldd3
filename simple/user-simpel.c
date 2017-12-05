@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
         length = 10;    
     
      
-    for( i=offset; i<length; i++){
+    for( i=offset; i<offset+length; i++){
         printf("val[%08x]=0x%08x\n",i, map[i] );
     }
     
