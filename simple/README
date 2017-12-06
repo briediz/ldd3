@@ -14,7 +14,7 @@ make (kernel module, copy the Makefile bevor)
 build user space for arm64:
 ----------------------------
 source /opt/fsl-qoriq/2.0/environment-setup-aarch64-fsl-linux
-$CC user-simpel.c
+$CC user-simple.c
 
 build kernel module for arm64:
 -------------------------------
