@@ -20,7 +20,7 @@
 int main(int argc, char* argv[]) {
  
     int input_fd;
-    int *map, *ptr;
+    int *map;
     int  fd, map_length, tmp;
     unsigned long long i, offset, length;
     
@@ -38,17 +38,16 @@ int main(int argc, char* argv[]) {
     else {
         perror("Error set file size");
         exit(EXIT_FAILURE);
-        return -1;
     }
 
     input_fd = open (argv [1], O_RDONLY);
     if (input_fd == -1) {
         perror ("open");
-        return 2;
+        exit(EXIT_FAILURE);
     }
     
     map = mmap(0, map_length, PROT_READ , MAP_SHARED, input_fd, 0);
-    ptr=map;
+    
     if (map <= 0) {
         close(input_fd);
         perror("Error mmapping the file");
@@ -69,11 +68,11 @@ int main(int argc, char* argv[]) {
         length = 10;    
     
      
-    for( i=offset; i<offset+length; i++){
-        printf("val[%08x]=0x%08x\n",i, map[i] );
+    for(i=offset/4; i<(offset/4) + length; i++){
+        printf("val[%08x]=0x%08x\n", i*4, map[i]);
     }
     
-    printf("read done %x bytes\n", map_length );
+    printf("read done %x bytes\n", map_length);
     
     if (munmap(map, map_length) == -1) {
         perror("Error un-mmapping the file");
@@ -81,14 +80,5 @@ int main(int argc, char* argv[]) {
     
     close (input_fd);
 
-#if 0
-    fd = open("/sys/bus/pci/devices/0000:01:00.0/resource1", O_RDWR | O_SYNC);
-    ptr = mmap(0, 40960000, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-    for( i=0; i<10; i++){
-        printf("PCI BAR[%d] 0x0000 = 0x%x\n", i,  *(ptr));
-        ptr++;
-    }
-    close (fd);
-#endif 
     return (EXIT_SUCCESS);
 }
